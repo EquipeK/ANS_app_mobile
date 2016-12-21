@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TransmitData</string>
+    <string name="btn_send_shopping_cart">Commander</string>
+    <string name="btn_send_command">Envoyer ma commande</string>
 </resources>

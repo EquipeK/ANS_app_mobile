@@ -59,12 +59,11 @@ public class MainActivity extends AppCompatActivity {
         products.add(p3);
         products.add(p4);
         products.add(p5);
+
         mAdapter = new MyAdapter(getApplicationContext(),products);
         recyclerView.setAdapter(mAdapter);
-        productsCommandParcel = new ArrayList<Parcelable>();
-        productsCommand = new ArrayList<Product>();
 
-        final ProductParcelable prdParcel = new ProductParcelable();
+        productsCommand = new ArrayList<Product>();
 
         btn_command.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0; i<productsList.size(); i++){
                     Product product = (Product) productsList.get(i);
                     if(product.isSelected){
-                        productsCommandParcel.add(product);
                         productsCommand.add(product);
-                        prdParcel.add(product);
                     }
                 }
+
+                Toast.makeText(getApplicationContext(),"Commande envoyer au panier",Toast.LENGTH_SHORT).show();
             }
         });
 
