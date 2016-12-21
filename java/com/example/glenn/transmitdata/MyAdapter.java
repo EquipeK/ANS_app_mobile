@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,17 +18,13 @@ import java.util.List;
  * Created by glenn on 19/12/2016.
  */
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private final List<Product> products = Arrays.asList(
-            new Product(1,R.drawable.chicken_rice,"NC001","Chicken & Rice 20kg","Croquet normal",false),
-            new Product(2,R.drawable.premim,"NC002","Premium Chicken 20kg","Croquet premium",false),
-            new Product(3,R.drawable.boeuf,"NC003","Boeuf 15kg","Croquet normal a base de boeuf",false),
-            new Product(4,R.drawable.bl_junior,"BREED01","Top junior 20kg","Croquet Breedline pour chiot",false),
-            new Product(5,R.drawable.bl_maintenance,"BREED02","Top maintenance 20Kg","Croquet Breedline",false)
-    );
+
     private Context context;
     private Button btn_command;
-
-    public MyAdapter(Context context_){
+    private CheckBox checkBox;
+    private ArrayList<IProduct> products;
+    public MyAdapter(Context context_, ArrayList<IProduct> products_){
+        products = products_;
         context = context_;
     }
 
@@ -37,9 +36,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        final Product product = products.get(position);
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        final Product product = (Product) products.get(position);
         holder.display(product);
+
+        checkBox = (CheckBox) holder.itemView.findViewById(R.id.checkbox_cart);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    ((Product) products.get(position)).isSelected = true;
+                }
+                else{
+                    ((Product) products.get(position)).isSelected = false;
+                }
+//                Toast.makeText(context,isChecked+"",Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     @Override
@@ -47,5 +61,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return products.size();
     }
 
+    public ArrayList<IProduct> getProductsList(){
+        return products;
+    }
 
 }

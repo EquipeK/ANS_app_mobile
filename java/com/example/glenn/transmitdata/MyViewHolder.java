@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
     private CheckBox checkBox;
     private ImageView thumb;
     private Product product;
-    private List<Product> products;
+    private ArrayList<IProduct> products;
     private Context context;
     private RecyclerView recyclerView;
     public MyViewHolder(final View itemView, final Context context_) {
@@ -32,29 +33,12 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         thumb = (ImageView) itemView.findViewById(R.id.thumb);
         recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler);
         context = context_;
-
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkBox.isChecked()){
-                    product.isSelected = true;
-                }
-                else{
-                    product.isSelected = false;
-                }
-            }
-        });
-
-
     }
 
     public void display(Product product_){
         product = product_;
         thumb.setImageResource(product.getThumb());
         reference.setText(product.getReference());
-        name.setText(product.getName());
-
+        product.isSelected = checkBox.isSelected();
     }
-
-
 }
